@@ -1,0 +1,61 @@
+n=5
+U=["A B","B C","C D","E D","E A","B E"]
+V=[13,   18,   17,    14,   22,   5]
+
+otv=[[]]
+f1="false"
+f2="false"
+x1=0
+x2=0
+s=0
+ind=V.index(min(V))
+otv[0].append(U[ind].split()[0])
+otv[0].append(U[ind].split()[1])
+
+
+k=2
+s+=min(V)
+U.pop(V.index(min(V)))
+V.pop(V.index(min(V)))
+while k<n:
+    mn=min(V)
+    i=V.index(min(V))
+    for j in range(0,len(otv)):
+        if U[i].split()[1] in otv[j]:
+            f1="true"
+            x1=j
+        if U[i].split()[0] in otv[j]:
+            f2="true"
+            x2=j
+    if (f1=="false")and(f2=="false"):
+        otv.append([])
+        otv[len(otv)-1].append(U[i].split()[0])
+        otv[len(otv)-1].append(U[i].split()[1])
+        U.pop(i)
+        V.pop(i)
+        s+=mn
+        k+=2
+    if (f1=="true")and(f2=="true")and(x1==x2):
+        U.pop(i)
+        V.pop(i)
+    if (f1=="true")and(f2=="true")and(x1!=x2):
+        otv[x1]+=otv[x2]
+        otv.pop(x2)
+        s+=mn
+        U.pop(i)
+        V.pop(i)
+    if (f1=="true")and(f2=="false"):
+        otv[x1].append(U[i].split()[1])
+        s+=mn
+        k+=1
+        U.pop(i)
+        V.pop(i)
+    if (f1=="false")and(f2=="true"):
+        otv[x2].append(U[i].split()[0])
+        s+=mn
+        k+=1
+        U.pop(i)
+        V.pop(i)
+    f1="false"
+    f2="false"
+print("Длина остова: ",s)
