@@ -1,0 +1,33 @@
+from math import inf
+
+def FordBellman(A, start):
+	start -= 1
+	A = infain(A)
+	n = len(A)
+	r = [inf for i in range(n)]
+	r[start] = 0
+	for i in range(n):
+		temp = []
+		for j in range(n):
+			for k in range(n):
+				temp += [r[j] + A[j][k]]
+		for j in range(n):
+			r[j] = min([temp[k] for k in range(j, len(temp), n)] + [r[j]])
+	return r
+
+
+def infain(A):
+	for i in range(len(A)):
+		for j in range(len(A)):
+			if A[i][j] == 0: A[i][j] = inf
+	return A
+
+A = [
+	[0, 13, 0, 0, 22],
+	[13, 0, 18, 0, 5],
+	[0, 18, 0, 17, 0],
+	[0, 0, 17, 0, 17],
+	[22, 5, 0, 14, 0]	
+]
+
+print(FordBellman(A, 1))
