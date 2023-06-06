@@ -1,0 +1,50 @@
+def Deikstra(A, start, end) -> (int, list):
+	start -= 1
+	end -= 1
+	i = 0
+	way = []
+	way += [start]
+	distance = 0
+	next = minNz(A[way[-1]])
+	nextN = A[way[-1]].index(next)
+	way += [nextN] 
+	distance = next
+	while True:
+		next = minNz(A[way[-1]])
+		nextN = A[way[-1]].index(next) 
+		if nextN in way:
+			if nextN == way[-2]: 
+				distance -= A[way[-2]][way[-1]]
+				A = nullC(A, way[-1])
+				way = way[:-1]
+				continue
+			elif minC(A, nextN) < next:
+				next = minC(A, nextN)
+				A[way[-1]][nextN] = next
+		way += [nextN]
+		distance += next
+		if nextN == end:
+			return distance, way
+
+def minC(A, i):
+	import numpy as np
+	return min(filter(lambda x: x>0, (np.array(A).transpose()[i])))
+
+def minNz(list):
+	return min(filter(lambda x: x>0, list))
+
+def nullC(l, i):
+	for j in range(len(l)):
+		l[j][i] = 0
+	return l
+
+A = [
+		[ 0,13, 0, 0,22], 
+		[13, 0,18, 0, 5],
+    [ 0,18, 0,17, 0],
+    [ 0, 0,17, 0,14],
+    [22, 5, 0,14, 0]
+	] 
+
+
+print(Deikstra(A, 1, 5)) #18
