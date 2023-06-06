@@ -1,0 +1,85 @@
+using System;
+using  System.Collections.Generic;
+class HelloWorld {
+  static void Main() {
+    int n=5;
+
+    int[] V=new int[6]        {13,   18,   17,    14,   22,   5};
+    string[] U=new string[6] {"A B","B C","C D","E D","E A","B E"};
+    //Dictionary<int,int> lens=new Dictionary<int,int>();
+    // Dictionary<string,int> len=new Dictionary<string,int>()
+    // {
+    //     {"A B" , 13},
+    //     {"B C" , 18},
+    //     {"C D", 17},
+    //     {"E D",14},
+    //     {"E A",22},
+    //     {"B E",5}
+    // };
+    
+    int s=0;
+    List<string> Otv=new List<string>();
+
+    Otv.Add("A");
+
+    while(Otv.Count()<n){
+      foreach(var i in U){      
+        int index=Array.IndexOf(U,i);
+        var simv=i.Split(' ');
+        if(simv.Count()>1){
+          string a=simv[0];
+          var b=simv[1];
+          if(Otv.Contains(a) && Otv.Contains(b)) U[index]="";
+        }
+      }
+
+      s+=D(V,U,Otv);
+    }
+  
+    Console.WriteLine("Длина остова: "+s);
+    
+
+    static int D(int[] V,string[] U, List<string> Otv){
+      int min=100;
+      string nver="";
+      int s=0;
+      foreach(var i in U){      
+        int index=Array.IndexOf(U,i);
+        var simv=i.Split(' ');
+        if(simv.Count()>1){
+          string a=simv[0];
+          var b=simv[1];
+          //if(Otv.Contains(a) && Otv.Contains(b)) U[index]="";
+          string ver=Otv.Last();
+          //Console.WriteLine(" "+V[index]+" - "+a+" "+b+" "+ver);
+          //
+          if(a==ver){
+            //Console.WriteLine("28 "+V[index]);
+            if(min>V[index]){
+              min=V[index];
+              nver=b;
+              //Console.WriteLine("22"+nver);
+
+            }
+          }
+          //
+          if(b==ver ){
+            if(min>V[index]){
+              min=V[index];
+              nver=a;
+              //Console.WriteLine("25"+nver);
+            }
+          }
+          // 
+        }
+        //
+      }
+
+      s+=min;
+      Otv.Add(nver);
+      Console.WriteLine("Вершина: "+nver+" Длина: "+min);
+      return s;
+    }
+
+  }
+}
